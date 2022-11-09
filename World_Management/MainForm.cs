@@ -12,9 +12,7 @@ namespace World_Management
         private void btn_shop_Click(object sender, EventArgs e)
         {
             ShopListForm sf = new ShopListForm();
-            this.Hide();
             sf.ShowDialog();
-            this.Close();
         }
 
         private void btn_addItem_Click(object sender, EventArgs e)

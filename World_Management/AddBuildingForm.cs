@@ -47,5 +47,10 @@ namespace World_Management
                 this.Close();
             }
         }
+
+        private void tb_name_TextChanged(object sender, EventArgs e)
+        {
+            unlockAddBuilding();
+        }
     }
 }

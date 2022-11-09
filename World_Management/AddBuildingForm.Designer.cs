@@ -76,6 +76,7 @@
             this.tb_name.Name = "tb_name";
             this.tb_name.Size = new System.Drawing.Size(160, 27);
             this.tb_name.TabIndex = 3;
+            this.tb_name.TextChanged += new System.EventHandler(this.tb_name_TextChanged);
             // 
             // AddBuildingForm
             // 
@@ -87,7 +88,7 @@
             this.Controls.Add(this.btn_cancel);
             this.Controls.Add(this.btn_addBuilding);
             this.Name = "AddBuildingForm";
-            this.Text = "Form1";
+            this.Text = "Add Building";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace World_Management
 {
-    public partial class ShopListForm : Form
+    public partial class AlchemyShop : Form
     {
-        public ShopListForm()
+        public AlchemyShop()
         {
             InitializeComponent();
-        }
-
-        private void btn_building_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
