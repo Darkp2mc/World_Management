@@ -19,7 +19,14 @@ namespace World_Management
 
         private void btn_building_Click(object sender, EventArgs e)
         {
-
+            var teste = ((Button)sender).Text.Trim();
+            switch (((Button)sender).Text.Trim())
+            {
+                case "Alchemy Shop":
+                    AlchemyShop form = new AlchemyShop();
+                    form.ShowDialog();
+                    break;
+            }
         }
     }
 }
