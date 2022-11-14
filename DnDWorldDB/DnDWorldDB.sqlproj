@@ -69,6 +69,8 @@
     <Build Include="dbo\Stored Procedures\Proc_AddBuilding.sql" />
     <Build Include="dbo\Stored Procedures\Proc_AddBuildingToItem.sql" />
     <Build Include="dbo\tables\buildingToItem.sql" />
+    <Build Include="dbo\tables\cityTypes.sql" />
+    <Build Include="dbo\tables\buildingsToCityTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DnDWorldDB.publish.xml" />

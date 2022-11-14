@@ -38,12 +38,14 @@
             this.btn_cancel = new System.Windows.Forms.Button();
             this.lbl_name = new System.Windows.Forms.Label();
             this.tb_name = new System.Windows.Forms.TextBox();
+            this.cb_isShop = new System.Windows.Forms.CheckBox();
+            this.lbl_isShop = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_addBuilding
             // 
             this.btn_addBuilding.Enabled = false;
-            this.btn_addBuilding.Location = new System.Drawing.Point(12, 81);
+            this.btn_addBuilding.Location = new System.Drawing.Point(12, 117);
             this.btn_addBuilding.Name = "btn_addBuilding";
             this.btn_addBuilding.Size = new System.Drawing.Size(106, 29);
             this.btn_addBuilding.TabIndex = 0;
@@ -53,7 +55,7 @@
             // 
             // btn_cancel
             // 
-            this.btn_cancel.Location = new System.Drawing.Point(124, 81);
+            this.btn_cancel.Location = new System.Drawing.Point(124, 117);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(106, 29);
             this.btn_cancel.TabIndex = 1;
@@ -78,11 +80,32 @@
             this.tb_name.TabIndex = 3;
             this.tb_name.TextChanged += new System.EventHandler(this.tb_name_TextChanged);
             // 
+            // cb_isShop
+            // 
+            this.cb_isShop.AutoSize = true;
+            this.cb_isShop.Location = new System.Drawing.Point(78, 65);
+            this.cb_isShop.Name = "cb_isShop";
+            this.cb_isShop.Size = new System.Drawing.Size(18, 17);
+            this.cb_isShop.TabIndex = 4;
+            this.cb_isShop.Tag = "checkBox1";
+            this.cb_isShop.UseVisualStyleBackColor = true;
+            // 
+            // lbl_isShop
+            // 
+            this.lbl_isShop.AutoSize = true;
+            this.lbl_isShop.Location = new System.Drawing.Point(12, 62);
+            this.lbl_isShop.Name = "lbl_isShop";
+            this.lbl_isShop.Size = new System.Drawing.Size(60, 20);
+            this.lbl_isShop.TabIndex = 5;
+            this.lbl_isShop.Text = "Is Shop:";
+            // 
             // AddBuildingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 122);
+            this.ClientSize = new System.Drawing.Size(244, 158);
+            this.Controls.Add(this.lbl_isShop);
+            this.Controls.Add(this.cb_isShop);
             this.Controls.Add(this.tb_name);
             this.Controls.Add(this.lbl_name);
             this.Controls.Add(this.btn_cancel);
@@ -100,5 +123,7 @@
         private Button btn_cancel;
         private Label lbl_name;
         private TextBox tb_name;
+        private CheckBox cb_isShop;
+        private Label lbl_isShop;
     }
 }

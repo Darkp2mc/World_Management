@@ -20,6 +20,7 @@ namespace World_Management
     {
         public int id { get; set; }
         public string name { get; set; }
+        public int isShop { get; set; } 
     }
 
     public class BuildingToItem
@@ -109,7 +110,8 @@ namespace World_Management
                     buildings.Add(new Building
                     {
                         id = Convert.ToInt32(read[0]),
-                        name = read[1].ToString()
+                        name = read[1].ToString(),
+                        isShop = Convert.ToInt32(read[2])
                     });
                 }
                 con.Close();
@@ -130,6 +132,7 @@ namespace World_Management
                 SqlCommand cmd = new SqlCommand("AddBuilding", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.Add("@name", SqlDbType.VarChar, 100).Value = building.name;
+                cmd.Parameters.Add("@isShop", SqlDbType.Int).Value = building.isShop;
                 con.Open();
                 cmd.ExecuteNonQuery();
 
@@ -148,8 +151,8 @@ namespace World_Management
                 using var con = new SqlConnection(_connectionString);
                 SqlCommand cmd = new SqlCommand("AddBuildingToItem", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.Add("@id_building", SqlDbType.VarChar, 100).Value = buildingToItem.id_building;
-                cmd.Parameters.Add("@id_item", SqlDbType.VarChar, 100).Value = buildingToItem.id_item;
+                cmd.Parameters.Add("@id_building", SqlDbType.Int).Value = buildingToItem.id_building;
+                cmd.Parameters.Add("@id_item", SqlDbType.Int).Value = buildingToItem.id_item;
                 con.Open();
                 cmd.ExecuteNonQuery();
 

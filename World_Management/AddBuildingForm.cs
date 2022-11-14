@@ -31,7 +31,8 @@ namespace World_Management
 
             Building building = new Building
             {
-                name = this.tb_name.Text
+                name = this.tb_name.Text,
+                isShop = Convert.ToInt32(this.cb_isShop.Checked)
             };
 
 
