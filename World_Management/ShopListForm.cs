@@ -29,9 +29,7 @@ namespace World_Management
             {
                 for (r = 0; r < layoutDims[1]; ++r)
                 {
-                    //TODO
-                    //IDK..
-                    if (r > 0 && (c < 4 && r == 1))
+                    if (r < layoutDims[1] - 1 || buildings.Count % 4 == 0 || c < buildings.Count % 4)
                     {
                         var btn = new Button();
                         btn.Text = buildings[c + r * 4].name;

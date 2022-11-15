@@ -71,6 +71,9 @@
     <Build Include="dbo\tables\buildingToItem.sql" />
     <Build Include="dbo\tables\cityTypes.sql" />
     <Build Include="dbo\tables\buildingsToCityTypes.sql" />
+    <Build Include="dbo\tables\settlements.sql" />
+    <Build Include="dbo\tables\states.sql" />
+    <Build Include="dbo\tables\provinces.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DnDWorldDB.publish.xml" />
