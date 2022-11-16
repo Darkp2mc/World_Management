@@ -7,6 +7,7 @@ namespace World_Management
         public MainForm()
         {
             InitializeComponent();
+            addStateTab();
         }
 
         private void btn_shop_Click(object sender, EventArgs e)

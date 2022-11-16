@@ -30,6 +30,25 @@ namespace World_Management
         public int id_item { get; set; }
     }
 
+    public class State
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string form { get; set; }
+        public int area { get; set; }
+        public int population { get; set; }
+    }
+
+    public class Province
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public int state { get; set; }
+        public string form { get; set; }
+        public int area { get; set; }
+        public int population { get; set; }
+    }
+
     public class ConnectDB
     {
         private string _connectionString;
@@ -54,11 +73,11 @@ namespace World_Management
                     items.Add(new Item
                     {
                         id = Convert.ToInt32(read[0]),
-                        name = read[1].ToString(),
+                        name = read[1].ToString().Trim(),
                         base_cost = Convert.ToInt32(read[2]),
                         weight = Convert.ToSingle(read[3]),
-                        rarity = read[4].ToString(),
-                        type = read[5].ToString()
+                        rarity = read[4].ToString().Trim(),
+                        type = read[5].ToString().Trim()
                     });
                 }
                 con.Close();
@@ -110,7 +129,7 @@ namespace World_Management
                     buildings.Add(new Building
                     {
                         id = Convert.ToInt32(read[0]),
-                        name = read[1].ToString(),
+                        name = read[1].ToString().Trim(),
                         isShop = Convert.ToInt32(read[2])
                     });
                 }
@@ -162,6 +181,70 @@ namespace World_Management
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public List<State> GetStates()
+        {
+            var states = new List<State>();
+            try
+            {
+                using var con = new SqlConnection(_connectionString);
+                SqlCommand cmd = new SqlCommand("GetStates", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                con.Open();
+                SqlDataReader read = cmd.ExecuteReader();
+                while (read.Read())
+                {
+                    states.Add(new State
+                    {
+                        id = Convert.ToInt32(read[0]),
+                        name = read[1].ToString().Trim(),
+                        form = read[2].ToString().Trim(),
+                        area = Convert.ToInt32(read[3]),
+                        population = Convert.ToInt32(read[4])
+                    });
+                }
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return states;
+        }
+
+        public List<Province> GetProvincesOfStates(int state_id)
+        {
+            var provinces = new List<Province>();
+            try
+            {
+                using var con = new SqlConnection(_connectionString);
+                SqlCommand cmd = new SqlCommand("GetProvinceOfState", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = state_id;
+                con.Open();
+                SqlDataReader read = cmd.ExecuteReader();
+                while (read.Read())
+                {
+                    provinces.Add(new Province
+                    {
+                        id = Convert.ToInt32(read[0]),
+                        name = read[1].ToString().Trim(),
+                        state = Convert.ToInt32(read[2]),
+                        form = read[3].ToString().Trim(),
+                        area = Convert.ToInt32(read[4]),
+                        population = Convert.ToInt32(read[5])
+                    });
+                }
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return provinces;
         }
     }
 

@@ -45,7 +45,7 @@ namespace World_Management
 
         private void btn_building_Click(object sender, EventArgs e)
         {
-            switch (((Button)sender).Text.Trim())
+            switch (((Button)sender).Text)
             {
                 case "Alchemy Shop":
                     AlchemyShop form = new AlchemyShop();

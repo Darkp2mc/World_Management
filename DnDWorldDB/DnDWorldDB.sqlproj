@@ -74,6 +74,10 @@
     <Build Include="dbo\tables\settlements.sql" />
     <Build Include="dbo\tables\states.sql" />
     <Build Include="dbo\tables\provinces.sql" />
+    <Build Include="dbo\Stored Procedures\Proc_GetStates.sql" />
+    <Build Include="dbo\Stored Procedures\Proc_GetProvinces.sql" />
+    <Build Include="dbo\Stored Procedures\Proc_GetSettlements.sql" />
+    <Build Include="dbo\Stored Procedures\Proc_GetProvinceOfState.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DnDWorldDB.publish.xml" />
