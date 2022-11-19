@@ -49,6 +49,18 @@ namespace World_Management
         public int population { get; set; }
     }
 
+    public class Settlement
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public int isCapital { get; set; }
+        public int population { get; set; }
+        public int cityType { get; set; }
+        public int province { get; set; }
+        public int state { get; set; }
+        public string form { get; set; }
+    }
+
     public class ConnectDB
     {
         private string _connectionString;
@@ -245,6 +257,73 @@ namespace World_Management
             }
 
             return provinces;
+        }
+
+        public State GetStateById(int state_id)
+        {
+            State state = new State();
+            try
+            {
+                using var con = new SqlConnection(_connectionString);
+                SqlCommand cmd = new SqlCommand("GetStateById", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = state_id;
+                con.Open();
+                SqlDataReader read = cmd.ExecuteReader();
+                while (read.Read())
+                {
+                    state = new State
+                    {
+                        id = Convert.ToInt32(read[0]),
+                        name = read[1].ToString().Trim(),
+                        form = read[2].ToString().Trim(),
+                        area = Convert.ToInt32(read[3]),
+                        population = Convert.ToInt32(read[4])
+                    };
+                }
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return state;
+        }
+
+        public List<Settlement> GetSettlementsOfProvinces(int province_id)
+        {
+            var settlements = new List<Settlement>();
+            try
+            {
+                using var con = new SqlConnection(_connectionString);
+                SqlCommand cmd = new SqlCommand("GetSettlementOfProvince", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = province_id;
+                con.Open();
+                SqlDataReader read = cmd.ExecuteReader();
+                while (read.Read())
+                {
+                    settlements.Add(new Settlement
+                    {
+                        id = Convert.ToInt32(read[0]),
+                        name = read[1].ToString().Trim(),
+                        isCapital = Convert.ToInt32(read[2]),
+                        population = Convert.ToInt32(read[3]),
+                        cityType = Convert.ToInt32(read[4]),
+                        province = Convert.ToInt32(read[5]),
+                        state = Convert.ToInt32(read[6]),
+                        form = read[7].ToString().Trim()
+                    });
+                }
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return settlements;
         }
     }
 

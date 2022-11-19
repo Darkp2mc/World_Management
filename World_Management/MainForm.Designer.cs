@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using static System.Windows.Forms.AxHost;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace World_Management
@@ -47,23 +48,9 @@ namespace World_Management
                 this.tc_states.Controls.Add(tab);
                 this.tabs_states.Add(tab);
 
-                addTabControlToStateTab(tab, state.id);
                 addStateGB(tab, state);
+                addTabControlToStateTab(tab, state.id);
             }
-        }
-
-        private void addTabControlToStateTab(TabPage selectedTbState, int stateId)
-        {
-            TabControl tc = new System.Windows.Forms.TabControl();
-
-            selectedTbState.Controls.Add(tc);
-            tc.Location = new System.Drawing.Point(300, 10);
-            tc.Name = "tb"+ stateId;
-            tc.SelectedIndex = 0;
-            tc.Size = new System.Drawing.Size(800, 490);
-            tc.TabIndex = stateId;
-
-            addProvinceTab(tc, stateId);
         }
 
         private void addStateGB(TabPage tab, State state)
@@ -115,6 +102,20 @@ namespace World_Management
 
         }
 
+        private void addTabControlToStateTab(TabPage selectedTbState, int stateId)
+        {
+            TabControl tc = new System.Windows.Forms.TabControl();
+
+            selectedTbState.Controls.Add(tc);
+            tc.Location = new System.Drawing.Point(270, 10);
+            tc.Name = "tb" + stateId;
+            tc.SelectedIndex = 0;
+            tc.Size = new System.Drawing.Size(880, 490);
+            tc.TabIndex = stateId;
+
+            addProvinceTab(tc, stateId);
+        }
+
         private void addProvinceTab(TabControl tc, int stateId)
         {
             var builder = new ConfigurationBuilder()
@@ -138,6 +139,115 @@ namespace World_Management
 
                 tc.Controls.Add(tab);
                 this.tabs_provinces.Add(tab);
+
+                addProvinceGB(tab, province);
+                addTabControlToProvinceTab(tab, province.id);
+            }
+        }
+
+        private void addProvinceGB(TabPage tab, Province province)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false, true);
+
+            ConnectDB db = new ConnectDB(builder.Build());
+
+            GroupBox gpProvince = new System.Windows.Forms.GroupBox();
+            gpProvince.Location = new System.Drawing.Point(0, 0);
+            gpProvince.Name = province.name;
+            gpProvince.Size = new System.Drawing.Size(250, 450);
+            gpProvince.TabIndex = 0;
+            gpProvince.TabStop = false;
+            gpProvince.Text = "Info:";
+            tab.Controls.Add(gpProvince);
+
+            Label lb_Provincename = new System.Windows.Forms.Label();
+            gpProvince.Controls.Add(lb_Provincename);
+            lb_Provincename.AutoSize = true;
+            lb_Provincename.Location = new System.Drawing.Point(5, 25);
+            lb_Provincename.Name = "lb_Provincename";
+            lb_Provincename.Size = new System.Drawing.Size(50, 20);
+            lb_Provincename.TabIndex = 0;
+            lb_Provincename.Text = "Name: " + province.name;
+
+            Label lb_ProvinceState = new System.Windows.Forms.Label();
+            gpProvince.Controls.Add(lb_ProvinceState);
+            lb_ProvinceState.AutoSize = true;
+            lb_ProvinceState.Location = new System.Drawing.Point(5, 50);
+            lb_ProvinceState.Name = "lb_ProvinceState";
+            lb_ProvinceState.Size = new System.Drawing.Size(50, 20);
+            lb_ProvinceState.TabIndex = 0;
+            lb_ProvinceState.Text = "State: " + db.GetStateById(province.state).name;
+
+            Label lb_ProvinceForm = new System.Windows.Forms.Label();
+            gpProvince.Controls.Add(lb_ProvinceForm);
+            lb_ProvinceForm.AutoSize = true;
+            lb_ProvinceForm.Location = new System.Drawing.Point(5, 75);
+            lb_ProvinceForm.Name = "lb_ProvinceForm";
+            lb_ProvinceForm.Size = new System.Drawing.Size(50, 20);
+            lb_ProvinceForm.TabIndex = 0;
+            lb_ProvinceForm.Text = "Form: " + province.form;
+            
+            Label lb_ProvinceArea = new System.Windows.Forms.Label();
+            gpProvince.Controls.Add(lb_ProvinceArea);
+            lb_ProvinceArea.AutoSize = true;
+            lb_ProvinceArea.Location = new System.Drawing.Point(5, 100);
+            lb_ProvinceArea.Name = "lb_StateArea";
+            lb_ProvinceArea.Size = new System.Drawing.Size(50, 20);
+            lb_ProvinceArea.TabIndex = 0;
+            lb_ProvinceArea.Text = "Area: " + province.area + " km²";
+
+            Label lb_ProvincePopulation = new System.Windows.Forms.Label();
+            gpProvince.Controls.Add(lb_ProvincePopulation);
+            lb_ProvincePopulation.AutoSize = true;
+            lb_ProvincePopulation.Location = new System.Drawing.Point(5, 125);
+            lb_ProvincePopulation.Name = "lb_StatePopulation";
+            lb_ProvincePopulation.Size = new System.Drawing.Size(50, 20);
+            lb_ProvincePopulation.TabIndex = 0;
+            lb_ProvincePopulation.Text = "Population: " + province.population;
+            
+        }
+
+        private void addTabControlToProvinceTab(TabPage selectedTbProvince, int provinceId)
+        {
+            TabControl tc = new System.Windows.Forms.TabControl();
+
+            selectedTbProvince.Controls.Add(tc);
+            tc.Location = new System.Drawing.Point(270, 10);
+            tc.Name = "tb" + provinceId;
+            tc.SelectedIndex = 0;
+            tc.Size = new System.Drawing.Size(600, 440);
+            tc.TabIndex = provinceId;
+
+            addSettlementTab(tc, provinceId);
+        }
+
+        private void addSettlementTab(TabControl tc, int provinceId)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false, true);
+
+            ConnectDB db = new ConnectDB(builder.Build());
+
+            List<Settlement> settlements = db.GetSettlementsOfProvinces(provinceId);
+
+            foreach (var settlement in settlements)
+            {
+                TabPage tab = new System.Windows.Forms.TabPage();
+                tab.Location = new System.Drawing.Point(4, 29);
+                tab.Name = settlement.name;
+                tab.Padding = new System.Windows.Forms.Padding(3);
+                tab.Size = new System.Drawing.Size(200, 0);
+                tab.TabIndex = settlement.id;
+                tab.Text = settlement.name;
+                tab.UseVisualStyleBackColor = true;
+
+                tc.Controls.Add(tab);
+
+                //addProvinceGB(tab, province);
+                //addTabControlToProvinceTab(tab, province.id);
             }
         }
 
@@ -217,6 +327,7 @@ namespace World_Management
         private TabControl tc_states;
         private List<TabPage> tabs_states = new List<TabPage>();
         private List<TabPage> tabs_provinces = new List<TabPage>();
+        private List<TabPage> tabs_settlements = new List<TabPage>();
         private List<TabControl> tcs_provinces = new List<TabControl>();
     }
 }
