@@ -58,7 +58,6 @@ namespace World_Management
         public int cityType { get; set; }
         public int province { get; set; }
         public int state { get; set; }
-        public string form { get; set; }
     }
 
     public class ConnectDB
@@ -312,8 +311,7 @@ namespace World_Management
                         population = Convert.ToInt32(read[3]),
                         cityType = Convert.ToInt32(read[4]),
                         province = Convert.ToInt32(read[5]),
-                        state = Convert.ToInt32(read[6]),
-                        form = read[7].ToString().Trim()
+                        state = Convert.ToInt32(read[6])
                     });
                 }
                 con.Close();
@@ -324,6 +322,64 @@ namespace World_Management
             }
 
             return settlements;
+        }
+
+        public Province GetProvinceById(int province_id)
+        {
+            Province province = new Province();
+            try
+            {
+                using var con = new SqlConnection(_connectionString);
+                SqlCommand cmd = new SqlCommand("GetProvinceById", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = province_id;
+                con.Open();
+                SqlDataReader read = cmd.ExecuteReader();
+                while (read.Read())
+                {
+                    province = new Province
+                    {
+                        id = Convert.ToInt32(read[0]),
+                        name = read[1].ToString().Trim(),
+                        state = Convert.ToInt32(read[2]),
+                        form = read[3].ToString().Trim(),
+                        area = Convert.ToInt32(read[4]),
+                        population = Convert.ToInt32(read[5])
+                    };
+                }
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return province;
+        }
+
+        public string GetCityTypeById(int cityType_id)
+        {
+            string cityType = "";
+            try
+            {
+                using var con = new SqlConnection(_connectionString);
+                SqlCommand cmd = new SqlCommand("GetCityTypeById", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = cityType_id;
+                con.Open();
+                SqlDataReader read = cmd.ExecuteReader();
+                while (read.Read())
+                {
+                    cityType = read[1].ToString().Trim();
+                }
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return cityType;
         }
     }
 

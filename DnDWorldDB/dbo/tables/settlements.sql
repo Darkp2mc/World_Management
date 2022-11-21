@@ -6,6 +6,5 @@
     [Population] INT NOT NULL, 
     [CityType] INT NOT NULL,
     [Province] INT NOT NULL, 
-    [State] INT NOT NULL, 
-    [Form] NCHAR(100) NOT NULL
+    [State] INT NOT NULL
 )

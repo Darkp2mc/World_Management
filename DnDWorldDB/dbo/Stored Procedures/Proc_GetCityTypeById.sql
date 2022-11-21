@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Proc_GetCityTypeById] @id int
+﻿CREATE PROCEDURE [dbo].[GetCityTypeById] @id int
 AS
 BEGIN
 	SELECT Id, Name

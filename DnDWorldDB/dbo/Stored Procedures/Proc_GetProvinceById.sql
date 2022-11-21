@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Proc_GetProvinceById] @id int
+﻿CREATE PROCEDURE [dbo].[GetProvinceById] @id int
 AS
 BEGIN
 	SELECT Id, Name, State, Form, Area, Population

@@ -246,9 +246,72 @@ namespace World_Management
 
                 tc.Controls.Add(tab);
 
-                //addProvinceGB(tab, province);
-                //addTabControlToProvinceTab(tab, province.id);
+                addSettlementGB(tab, settlement);
             }
+        }
+
+        private void addSettlementGB(TabPage tab, Settlement settlement)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false, true);
+
+            ConnectDB db = new ConnectDB(builder.Build());
+
+            GroupBox gpSettlement = new System.Windows.Forms.GroupBox();
+            gpSettlement.Location = new System.Drawing.Point(0, 0);
+            gpSettlement.Name = settlement.name;
+            gpSettlement.Size = new System.Drawing.Size(250, 400);
+            gpSettlement.TabIndex = 0;
+            gpSettlement.TabStop = false;
+            gpSettlement.Text = "Info:";
+            tab.Controls.Add(gpSettlement);
+            
+            Label lb_Settlementname = new System.Windows.Forms.Label();
+            gpSettlement.Controls.Add(lb_Settlementname);
+            lb_Settlementname.AutoSize = true;
+            lb_Settlementname.Location = new System.Drawing.Point(5, 25);
+            lb_Settlementname.Name = "lb_Settlementname";
+            lb_Settlementname.Size = new System.Drawing.Size(50, 20);
+            lb_Settlementname.TabIndex = 0;
+            lb_Settlementname.Text = "Name: " + settlement.name;
+
+            Label lb_SettlementProvince = new System.Windows.Forms.Label();
+            gpSettlement.Controls.Add(lb_SettlementProvince);
+            lb_SettlementProvince.AutoSize = true;
+            lb_SettlementProvince.Location = new System.Drawing.Point(5, 50);
+            lb_SettlementProvince.Name = "lb_SettlementState";
+            lb_SettlementProvince.Size = new System.Drawing.Size(50, 20);
+            lb_SettlementProvince.TabIndex = 0;
+            lb_SettlementProvince.Text = "Province: " + db.GetProvinceById(settlement.province).name;
+
+            Label lb_SettlementState = new System.Windows.Forms.Label();
+            gpSettlement.Controls.Add(lb_SettlementState);
+            lb_SettlementState.AutoSize = true;
+            lb_SettlementState.Location = new System.Drawing.Point(5, 75);
+            lb_SettlementState.Name = "lb_SettlementState";
+            lb_SettlementState.Size = new System.Drawing.Size(50, 20);
+            lb_SettlementState.TabIndex = 0;
+            lb_SettlementState.Text = "State: " + db.GetStateById(settlement.state).name;
+
+            Label lb_SettlementPopulation = new System.Windows.Forms.Label();
+            gpSettlement.Controls.Add(lb_SettlementPopulation);
+            lb_SettlementPopulation.AutoSize = true;
+            lb_SettlementPopulation.Location = new System.Drawing.Point(5, 100);
+            lb_SettlementPopulation.Name = "lb_SettlemenPopulation";
+            lb_SettlementPopulation.Size = new System.Drawing.Size(50, 20);
+            lb_SettlementPopulation.TabIndex = 0;
+            lb_SettlementPopulation.Text = "Population: " + settlement.population;
+            
+            Label lb_SettlementCityType = new System.Windows.Forms.Label();
+            gpSettlement.Controls.Add(lb_SettlementCityType);
+            lb_SettlementCityType.AutoSize = true;
+            lb_SettlementCityType.Location = new System.Drawing.Point(5, 125);
+            lb_SettlementCityType.Name = "lb_SettlementCityType";
+            lb_SettlementCityType.Size = new System.Drawing.Size(50, 20);
+            lb_SettlementCityType.TabIndex = 0;
+            lb_SettlementCityType.Text = "City Type: " + db.GetCityTypeById(settlement.cityType);
+            
         }
 
         #region Windows Form Designer generated code
