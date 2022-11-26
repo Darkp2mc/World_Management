@@ -82,6 +82,7 @@
     <Build Include="dbo\Stored Procedures\Proc_GetProvinceById.sql" />
     <Build Include="dbo\Stored Procedures\Proc_GetCityTypeById.sql" />
     <Build Include="dbo\Stored Procedures\Proc_GetSettlementOfProvince.sql" />
+    <Build Include="dbo\Stored Procedures\Proc_GetCityTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DnDWorldDB.publish.xml" />

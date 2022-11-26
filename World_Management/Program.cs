@@ -21,6 +21,7 @@ namespace World_Management
         public int id { get; set; }
         public string name { get; set; }
         public int isShop { get; set; } 
+        public int cityTypeId { get; set; }
     }
 
     public class BuildingToItem
@@ -58,6 +59,13 @@ namespace World_Management
         public int cityType { get; set; }
         public int province { get; set; }
         public int state { get; set; }
+    }
+    public class CityType
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public int minPopulation { get; set; }
+        public int maxPopulation { get; set; }
     }
 
     public class ConnectDB
@@ -141,7 +149,8 @@ namespace World_Management
                     {
                         id = Convert.ToInt32(read[0]),
                         name = read[1].ToString().Trim(),
-                        isShop = Convert.ToInt32(read[2])
+                        isShop = Convert.ToInt32(read[2]),
+                        cityTypeId = Convert.ToInt32(read[3])
                     });
                 }
                 con.Close();
@@ -163,6 +172,7 @@ namespace World_Management
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.Add("@name", SqlDbType.VarChar, 100).Value = building.name;
                 cmd.Parameters.Add("@isShop", SqlDbType.Int).Value = building.isShop;
+                cmd.Parameters.Add("@cityTypeId", SqlDbType.Int).Value = building.cityTypeId;
                 con.Open();
                 cmd.ExecuteNonQuery();
 
@@ -355,6 +365,37 @@ namespace World_Management
             }
 
             return province;
+        }
+
+        public List<CityType> GetCityTypes()
+        {
+            List<CityType> cityTypes = new List<CityType>();
+            try
+            {
+                using var con = new SqlConnection(_connectionString);
+                SqlCommand cmd = new SqlCommand("GetCityTypes", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                con.Open();
+                SqlDataReader read = cmd.ExecuteReader();
+                while (read.Read())
+                {
+                    var test = read[3];
+                    cityTypes.Add(new CityType
+                    {
+                        id = Convert.ToInt32(read[0]),
+                        name = read[1].ToString().Trim(),
+                        minPopulation = Convert.ToInt32(read[2]),
+                        maxPopulation = read[3].ToString().Count() == 0 ? int.MaxValue : Convert.ToInt32(read[3])
+                    });
+                }
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return cityTypes;
         }
 
         public string GetCityTypeById(int cityType_id)

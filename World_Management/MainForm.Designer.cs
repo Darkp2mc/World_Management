@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using static System.Windows.Forms.AxHost;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Button = System.Windows.Forms.Button;
 
 namespace World_Management
 {
@@ -58,7 +59,7 @@ namespace World_Management
             GroupBox gpState = new System.Windows.Forms.GroupBox();
             gpState.Location = new System.Drawing.Point(0, 0);
             gpState.Name = state.name;
-            gpState.Size = new System.Drawing.Size(250, 500);
+            gpState.Size = new System.Drawing.Size(200, 500);
             gpState.TabIndex = 0;
             gpState.TabStop = false;
             gpState.Text = "Info:";
@@ -107,10 +108,10 @@ namespace World_Management
             TabControl tc = new System.Windows.Forms.TabControl();
 
             selectedTbState.Controls.Add(tc);
-            tc.Location = new System.Drawing.Point(270, 10);
+            tc.Location = new System.Drawing.Point(220, 10);
             tc.Name = "tb" + stateId;
             tc.SelectedIndex = 0;
-            tc.Size = new System.Drawing.Size(880, 490);
+            tc.Size = new System.Drawing.Size(940, 490);
             tc.TabIndex = stateId;
 
             addProvinceTab(tc, stateId);
@@ -156,7 +157,7 @@ namespace World_Management
             GroupBox gpProvince = new System.Windows.Forms.GroupBox();
             gpProvince.Location = new System.Drawing.Point(0, 0);
             gpProvince.Name = province.name;
-            gpProvince.Size = new System.Drawing.Size(250, 450);
+            gpProvince.Size = new System.Drawing.Size(200, 450);
             gpProvince.TabIndex = 0;
             gpProvince.TabStop = false;
             gpProvince.Text = "Info:";
@@ -214,10 +215,10 @@ namespace World_Management
             TabControl tc = new System.Windows.Forms.TabControl();
 
             selectedTbProvince.Controls.Add(tc);
-            tc.Location = new System.Drawing.Point(270, 10);
+            tc.Location = new System.Drawing.Point(220, 10);
             tc.Name = "tb" + provinceId;
             tc.SelectedIndex = 0;
-            tc.Size = new System.Drawing.Size(600, 440);
+            tc.Size = new System.Drawing.Size(700, 440);
             tc.TabIndex = provinceId;
 
             addSettlementTab(tc, provinceId);
@@ -247,6 +248,7 @@ namespace World_Management
                 tc.Controls.Add(tab);
 
                 addSettlementGB(tab, settlement);
+                addShopsBtn(tab);
             }
         }
 
@@ -261,7 +263,7 @@ namespace World_Management
             GroupBox gpSettlement = new System.Windows.Forms.GroupBox();
             gpSettlement.Location = new System.Drawing.Point(0, 0);
             gpSettlement.Name = settlement.name;
-            gpSettlement.Size = new System.Drawing.Size(250, 400);
+            gpSettlement.Size = new System.Drawing.Size(200, 400);
             gpSettlement.TabIndex = 0;
             gpSettlement.TabStop = false;
             gpSettlement.Text = "Info:";
@@ -314,6 +316,20 @@ namespace World_Management
             
         }
 
+        private void addShopsBtn(TabPage tab)
+        {
+            Button btn_shops = new System.Windows.Forms.Button();
+            btn_shops.Location = new System.Drawing.Point(200, 0);
+            btn_shops.Name = "btn_shops";
+            btn_shops.Size = new System.Drawing.Size(111, 29);
+            btn_shops.TabIndex = 2;
+            btn_shops.Text = "Shops";
+            btn_shops.UseVisualStyleBackColor = true;
+            btn_shops.Click += new System.EventHandler(this.btn_shop_Click);
+            tab.Controls.Add(btn_shops);
+        }
+        
+        
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -391,6 +407,5 @@ namespace World_Management
         private List<TabPage> tabs_states = new List<TabPage>();
         private List<TabPage> tabs_provinces = new List<TabPage>();
         private List<TabPage> tabs_settlements = new List<TabPage>();
-        private List<TabControl> tcs_provinces = new List<TabControl>();
     }
 }

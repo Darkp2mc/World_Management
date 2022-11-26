@@ -18,6 +18,7 @@ namespace World_Management
         public AddBuildingForm()
         {
             InitializeComponent();
+            addCityTypesItemsToCB();
         }
 
         private void btn_addBuilding_Click(object sender, EventArgs e)
@@ -32,7 +33,8 @@ namespace World_Management
             Building building = new Building
             {
                 name = this.tb_name.Text,
-                isShop = Convert.ToInt32(this.cb_isShop.Checked)
+                isShop = Convert.ToInt32(this.cb_isShop.Checked),
+                cityTypeId = cb_CityType.SelectedIndex + 1
             };
 
 

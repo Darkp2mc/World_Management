@@ -1,4 +1,6 @@
-﻿namespace World_Management
+﻿using Microsoft.Extensions.Configuration;
+
+namespace World_Management
 {
     partial class AddBuildingForm
     {
@@ -25,6 +27,24 @@
             this.btn_addBuilding.Enabled = !string.IsNullOrEmpty(this.tb_name.Text);
         }
 
+        private void addCityTypesItemsToCB()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false, true);
+
+            configuration1 = builder.Build();
+            ConnectDB db = new ConnectDB(configuration1);
+
+            List<CityType> cityTypes = db.GetCityTypes();
+            List<string> cityTypeNames = new List<string>();
+            foreach (CityType cityType in cityTypes)
+            {
+                cityTypeNames.Add(cityType.name);
+            }
+            this.cb_CityType.DataSource = cityTypeNames;
+        }
+
 
         #region Windows Form Designer generated code
 
@@ -40,12 +60,14 @@
             this.tb_name = new System.Windows.Forms.TextBox();
             this.cb_isShop = new System.Windows.Forms.CheckBox();
             this.lbl_isShop = new System.Windows.Forms.Label();
+            this.cb_CityType = new System.Windows.Forms.ComboBox();
+            this.lbl_cityType = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_addBuilding
             // 
             this.btn_addBuilding.Enabled = false;
-            this.btn_addBuilding.Location = new System.Drawing.Point(12, 117);
+            this.btn_addBuilding.Location = new System.Drawing.Point(12, 156);
             this.btn_addBuilding.Name = "btn_addBuilding";
             this.btn_addBuilding.Size = new System.Drawing.Size(106, 29);
             this.btn_addBuilding.TabIndex = 0;
@@ -55,7 +77,7 @@
             // 
             // btn_cancel
             // 
-            this.btn_cancel.Location = new System.Drawing.Point(124, 117);
+            this.btn_cancel.Location = new System.Drawing.Point(124, 156);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(106, 29);
             this.btn_cancel.TabIndex = 1;
@@ -99,11 +121,30 @@
             this.lbl_isShop.TabIndex = 5;
             this.lbl_isShop.Text = "Is Shop:";
             // 
+            // cb_CityType
+            // 
+            this.cb_CityType.FormattingEnabled = true;
+            this.cb_CityType.Location = new System.Drawing.Point(90, 101);
+            this.cb_CityType.Name = "cb_CityType";
+            this.cb_CityType.Size = new System.Drawing.Size(142, 28);
+            this.cb_CityType.TabIndex = 6;
+            // 
+            // lbl_cityType
+            // 
+            this.lbl_cityType.AutoSize = true;
+            this.lbl_cityType.Location = new System.Drawing.Point(12, 104);
+            this.lbl_cityType.Name = "lbl_cityType";
+            this.lbl_cityType.Size = new System.Drawing.Size(72, 20);
+            this.lbl_cityType.TabIndex = 7;
+            this.lbl_cityType.Text = "City Type:";
+            // 
             // AddBuildingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 158);
+            this.ClientSize = new System.Drawing.Size(244, 198);
+            this.Controls.Add(this.lbl_cityType);
+            this.Controls.Add(this.cb_CityType);
             this.Controls.Add(this.lbl_isShop);
             this.Controls.Add(this.cb_isShop);
             this.Controls.Add(this.tb_name);
@@ -125,5 +166,7 @@
         private TextBox tb_name;
         private CheckBox cb_isShop;
         private Label lbl_isShop;
+        private ComboBox cb_CityType;
+        private Label lbl_cityType;
     }
 }
